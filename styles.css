@@ -1,0 +1,42 @@
+* {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 100%;
+    color: white;
+    background: darkslategrey;
+
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+#content {
+    width: 100%;
+}
+
+h1 {
+    font-size: 48pt;
+    font-weight: 900;
+}
+
+h3 {
+    font-size: 30pt;
+    font-weight: bold;
+    padding-bottom: 5%;
+}
+
+#question {
+    font-size: 36pt;
+    font-weight: 900;
+}
+
+#options {
+    font-size: 24pt;
+    font-weight: bold;
+    width: 90%;
+    display: block;
+}
+
+button {
+    width: 100%;
+    height: fit-content;
+}
