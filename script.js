@@ -71,7 +71,7 @@ function main() {
     const noFrame3Inv = new Question("You find the porter and a couple of guards having drinks in the kitchen. You remain around the corner without acknowledging your presence, and they don't notice you.", CONTINUE);
     noFrame2.setPath(0, noFrame3Inv);
 
-    const noFrame3Bed = new Question("You return to your own quarters and turn in for the night, but your conscience runs astray. You can't help but wonder whether the prophecy could have come true without the need for murder.");
+    const noFrame3Bed = new Question("You return to your own quarters and turn in for the night, but your conscience runs astray. You can't help but wonder whether the prophecy could have come true without the need for murder.", RESTART);
     noFrame2.setPath(1, noFrame3Bed);
     noFrame3Inv.setPath(0, noFrame3Bed);
 
