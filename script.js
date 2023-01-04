@@ -177,12 +177,11 @@ function buttonPress(button) {
     const id = button.id[ 7 ];
     console.log(id);
     const q = responsePaths[ id - 1 ];
-    if (q != null) {
+    if (q == null) {
+        start();
+    } else {
         document.getElementById("title").hidden = true;
         askQuestion(responsePaths[ id - 1 ]);
-    } else {
-        console.log("null");
-        start();
     }
 }
 
