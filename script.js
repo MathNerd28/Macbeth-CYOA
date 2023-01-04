@@ -4,7 +4,7 @@ let startPath;
 function main() {
     const CONTINUE = [ "[ Continue ]" ];
     const RESTART = [ "[ RESTART ]" ];
-    startPath = new Question("This maze of stories provides answers to many \"what if\" questions readers might have, and guides them on a journey to see what could have been. Click the button below to begin.", [ "[ Start ]" ]);
+    startPath = new Question("This maze of stories provides answers to many \"what if\" questions readers might have had, and guides them on a journey to see what could have happened to Macbeth. Click the button below to begin.", [ "[ Start ]" ]);
 
     // ACT 1
 
@@ -23,7 +23,7 @@ function main() {
     question2.setPath(0, prophecy1);
     question2.setPath(1, prophecy1);
 
-    const prophecy2 = new Question("The 'witches' name you Thane of Glamis, while you never told them your name. However, they also note that you are Thane of Cawdor as well, and soon to be King of Scotland. They then vanish into thin air!", [ "Don't believe them", "Believe them" ]);
+    const prophecy2 = new Question("The 'witches' name you Thane of Glamis, while you never told them your name. However, they also note that you are Thane of Cawdor as well, and soon to be King of Scotland. Finally, they finish by announcing that your best friend Banquo's child will also be a king someday. They then vanish into thin air!", [ "Don't believe them", "Believe them" ]);
     prophecy1.setPath(1, prophecy2);
 
     const prophecy3 = new Question("Moments later, two Scottish noblemen enter, praising you with the title King just bestowed upon you for your heroism: Thane of Cawdor. You wonder if perhaps the second part of the prophecy might come true, and whether you need to make it happen yourself.", CONTINUE);
@@ -35,6 +35,8 @@ function main() {
 
     const letter = new Question("You spend the journey pondering whether or not to kill the King, for that is the only way to ascend to the throne. When you arrive, your spouse pulls you aside to discuss the topic. She is very much in favor of the murder, and tries to persuade you in that direction.", [ "Kill the king", "Accept your honors with your dignity intact" ]);
     bestows.setPath(0, letter);
+
+    // ACT 2
 
     // Branch: doesn't kill Duncan
     const noKill1 = new Question("Ironically, it seems the King's son Malcolm had similar ideas of rising through the ranks. Later that night, after the partying is done, he makes an attempt on his father's life; however, you catch him heading to the King's quarters with a dagger in his hand.", [ "Let Malcolm kill the King", "Yell for assistance in apprehending Malcolm" ]);
@@ -58,6 +60,41 @@ function main() {
 
     const murderDuncan = new Question("The following night, you enter the king's quarters while he's asleep. The guards have already gotten drunk (thanks to your spouse), and you quietly slip past them into the bedroom and slit his throat.", CONTINUE);
     letter.setPath(0, murderDuncan);
+
+    const daggerChoice = new Question("On the way out, you have an idea: what if you frame the guards for the murder? You could leave the daggers on the table beside them, and they'll wake up with their minds clouded from drink.", [ "Frame the guards", "Take the dagger with you" ]);
+    murderDuncan.setPath(0, daggerChoice);
+
+    const noFrame1 = new Question("You take the daggers out to a sink to clean the blood off, but your spouse meets you outside first. You tell them your idea to leave the daggers with the guards, and they agree that it would be beneficial.", [ "Go back to leave the daggers with the guards", "Keep the daggers out here" ]);
+    daggerChoice.setPath(1, noFrame1);
+
+    const noFrame2 = new Question("You clean the blood off of the daggers at the sink, but hear a noise while you're drying them off.", [ "Investigate the noise", "Ignore it and go to bed" ]);
+    noFrame1.setPath(1, noFrame2);
+
+    const noFrame3Inv = new Question("You find the porter and a couple of guards having drinks in the kitchen. You remain around the corner without acknowledging your presence, and they don't notice you.", CONTINUE);
+    noFrame2.setPath(0, noFrame3Inv);
+
+    const noFrame3Bed = new Question("You return to your own quarters and turn in for the night, but your conscience runs astray. You can't help but wonder whether the prophecy could have come true without the need for murder.");
+    noFrame2.setPath(1, noFrame3Bed);
+    noFrame3Inv.setPath(0, noFrame3Bed);
+
+    const frameGuards = new Question("You double back to leave the daggers on the guards' table, and smear some of the blood on their uniforms (for good measure). You then return to your own quarters to clean yourself and go to bed.", CONTINUE);
+    daggerChoice.setPath(0, frameGuards);
+    noFrame1.setPath(0, frameGuards);
+
+    const discovery = new Question("In the morning, the king's dead body is discovered, and immediate suspicion goes to the guards (who can hardly say their names). It seems the king's two sons quickly slip out and run away, who become the prime suspects in the plot.", [ CONTINUE ]);
+    noFrame3Bed.setPath(0, discovery);
+    frameGuards.setPath(0, discovery);
+
+    // ACT 3
+
+    const heir = new Question("As both of the king's sons have fled, you are named King of Scotland. Your wife seems satisfied: after all, she's a queen now! However, you can't forget the last part of the prophecy: that Banquo's son would be a king someday. You wonder if he will kill you to take the throne, just as you killed Duncan.", [ "Send someone to kill Banquo and his son", "Don't worry about it" ]);
+    discovery.setPath(0, heir);
+
+    const noKill2 = new Question("One murder is enough for you, and it seems you got away with it. While it weighs heavily on your conscience, you serve as King of Scotland for the rest of your years; however, upon your death, you had never chosen your heir. Your friend Banquo is long dead, killed in a skirmish, so the next-closest person to you is named king: Banquo's son Fleance.", RESTART);
+    heir.setPath(1, noKill2);
+
+    const killBanquo = new Question("You select two of your guards who seem stealthy and discreet, and follow orders without asking questions. You send them to kill Banquo and his son Fleance, and they leave to do your bidding.", CONTINUE);
+    heir.setPath(0, killBanquo);
 
     start();
 }
