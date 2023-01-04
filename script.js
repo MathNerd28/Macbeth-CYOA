@@ -38,7 +38,6 @@ function main() {
 
     // ACT 2
 
-    // Branch: doesn't kill Duncan
     const noKill1 = new Question("Ironically, it seems the King's son Malcolm had similar ideas of rising through the ranks. Later that night, after the partying is done, he makes an attempt on his father's life; however, you catch him heading to the King's quarters with a dagger in his hand.", [ "Let Malcolm kill the King", "Yell for assistance in apprehending Malcolm" ]);
     letter.setPath(1, noKill1);
 
@@ -56,7 +55,6 @@ function main() {
 
     const noKill1b2 = new Question("In the morning, Duncan proclaims that Malcolm is unworthy to take the throne, and he has his doubts with his other son as well. He proclaims that you shall be his heir, despite the lack of a bloodline. As it turns out, you'll get to be king someday! (If you aren't murdered first)", RESTART);
     noKill1b1.setPath(0, noKill1b2);
-    // End branch
 
     const murderDuncan = new Question("The following night, you enter the king's quarters while he's asleep. The guards have already gotten drunk (thanks to your spouse), and you quietly slip past them into the bedroom and slit his throat.", CONTINUE);
     letter.setPath(0, murderDuncan);
@@ -93,9 +91,26 @@ function main() {
     const noKill2 = new Question("One murder is enough for you, and it seems you got away with it. While it weighs heavily on your conscience, you serve as King of Scotland for the rest of your years; however, upon your death, you had never chosen your heir. Your friend Banquo is long dead, killed in a skirmish, so the next-closest person to you is named king: Banquo's son Fleance.", RESTART);
     heir.setPath(1, noKill2);
 
-    const killBanquo = new Question("You select two of your guards who seem stealthy and discreet, and follow orders without asking questions. You send them to kill Banquo and his son Fleance, and they leave to do your bidding.", CONTINUE);
+    const killBanquo = new Question("You select two of your guards who seem stealthy and discreet, and follow orders without asking questions. They too have their own motives to kill your friend. You send them to kill Banquo and his son Fleance, and they leave to do your bidding.", CONTINUE);
     heir.setPath(0, killBanquo);
 
+    const banquet = new Question("That night, a banquet is held in honor of your new kingship. In the middle of it, the murderers return, and one of them beckons you to come. It seems that while they killed Banquo successfully, they failed to kill Fleance. You dismiss him, but now two murders weigh on your conscience.", CONTINUE);
+    killBanquo.setPath(0, banquet);
+
+    const banquoGhost = new Question("When returning to the table, it seems a Ghost of Banquo occupies your seat to haunt you. Your spouse covers for your apparent insanity, but you both worry if all of this foul play is taking its toll on your minds.", CONTINUE);
+    banquet.setPath(0, banquoGhost);
+
+    const curiosity = new Question("You then realize that you're curious what comes next. Perhaps you could ask the witches, and they could tell you more?", [ "Seek out the witches", "Suppress your curiosity" ]);
+    banquoGhost.setPath(0, curiosity);
+
+    const noWitches = new Question("You try to forget about the witches, but it eats you up inside and causes you to forget your duties to the people of Scotland. Eventually, Malcolm returns to visit, but kills you just how you killed his father. How fitting that the original heir becomes king in the end!", RESTART);
+    curiosity.setPath(1, noWitches);
+
+    // ACT 4
+
+    const witchesQuestions = new Question("");
+    curiosity.setPath(0, witchesQuestions);
+    
     start();
 }
 
