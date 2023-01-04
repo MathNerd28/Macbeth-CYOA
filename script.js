@@ -108,9 +108,32 @@ function main() {
 
     // ACT 4
 
-    const witchesQuestions = new Question("");
+    const witchesQuestions = new Question("You go to find the witches, who are in a large cavern with a cauldron in the middle. Perhaps calling them witches is accurate after all? Anyway, you demand to hear answers, and the witches' masters appear in turn to respond to the questions troubling your mind.", CONTINUE);
     curiosity.setPath(0, witchesQuestions);
-    
+
+    const witchesAnswers = new Question("The apparitions that appear tell you three things: first, to beware Macduff, Thane of Fife; second, that no man born from a woman shall ever harm you; and third, you will only be defeated when Great Birnam Wood fights you at Dunsinane Hill. However, they refuse to tell you if Fleance is a threat to you.", CONTINUE);
+    witchesQuestions.setPath(0, witchesAnswers);
+
+    const macduffFlees = new Question("Just as you're leaving, news arrives that Macduff has fled to England as well.", [ "Attack Macduff's castle", "Ignore the news" ]);
+    witchesAnswers.setPath(0, macduffFlees);
+
+    const ignoreNews = new Question("With the threat of Macduff seemingly gone, you return to ruling Scotland. However, you are not benevolent in your ways; in fact, your subjects hate you as king and long for the days of Duncan to be back. You rule for about a year, but you're later attacked and killed by a woman in a rebel skirmish on Dunsinane Hill. Malcolm returns, and is crowned the rightful king.", RESTART);
+    macduffFlees.setPath(1, ignoreNews);
+
+    const attackMacduff = new Question("You send the same murderers as before into the castle to find Macduff's family, in the hopes that he will be deterred from fighting you. The murderers kill his wife and son, then return to your castle to tell you this news.", CONTINUE);
+    macduffFlees.setPath(0, attackMacduff);
+
+    // ACT 5 (no branches)
+
+    const armyAttacks = new Question("The doctor tells you that your spouse has been having horrible visions recently, but you brush it off as insignificant. You then receive news that the English army has come to attack you, and that the trees are, in fact, moving with them! But in your haste to prepare, overcome with adrenaline, you forget about what was prophesied", CONTINUE);
+    attackMacduff.setPath(0, armyAttacks);
+
+    const queenDies = new Question("Later, during preparations, you receive news that your spouse has died, but again you don't care at all. All that is important right now is \"protecting\" your kingdom from the invaders.", CONTINUE);
+    armyAttacks.setPath(0, queenDies);
+
+    const end = new Question("Finally, you lead your army up the hill to face off with Macduff. However, he wasn't technically \"born\" from his mother: he was surgically removed. So, he defeats you, and Malcolm takes up his rightful position as King of Scotland.", RESTART);
+    queenDies.setPath(0, end);
+
     start();
 }
 
